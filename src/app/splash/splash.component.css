@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Playfair+Display:ital,wght@1,600&display=swap');
+
+:host {
+  display: block;
+}
+
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #0b0710;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.7s ease, transform 0.7s ease, filter 0.7s ease;
+}
+
+.splash.salida {
+  opacity: 0;
+  transform: scale(1.06);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.fondo-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: zoom 8s ease-out both;
+}
+
+.velo {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(11, 7, 16, 0.92) 0%, rgba(11, 7, 16, 0.35) 55%, rgba(11, 7, 16, 0.15) 100%),
+    linear-gradient(135deg, rgba(255, 79, 163, 0.35), rgba(177, 76, 255, 0.25));
+}
+
+.contenido {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+
+.etiqueta {
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  animation: aparecer 0.8s ease both;
+}
+
+.titulo {
+  margin: 0;
+  font-size: clamp(2.8rem, 9vw, 7rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #fff;
+  text-shadow: 0 4px 40px rgba(0, 0, 0, 0.4);
+}
+
+.linea {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.12em;
+}
+
+.linea > span {
+  display: inline-block;
+  transform: translateY(110%);
+  animation: subir 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.linea:nth-child(1) > span {
+  animation-delay: 0.3s;
+}
+
+.linea:nth-child(2) > span {
+  animation-delay: 0.5s;
+}
+
+.linea:nth-child(3) > span {
+  animation-delay: 0.7s;
+}
+
+.enfasis {
+  padding-right: 0.1em;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 600;
+  background: linear-gradient(135deg, #ffb3d9, #ff4fa3 50%, #c77dff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+}
+
+.brillo {
+  position: absolute;
+  z-index: 2;
+  color: #fff;
+  text-shadow: 0 0 12px #ff4fa3, 0 0 24px #ff4fa3;
+  pointer-events: none;
+  animation: titilar 3s ease-in-out infinite;
+}
+
+.b1 {
+  top: 12%;
+  left: 10%;
+  font-size: 1.6rem;
+  animation-delay: 0s;
+}
+
+.b2 {
+  top: 20%;
+  right: 12%;
+  font-size: 2.2rem;
+  animation-delay: 0.6s;
+}
+
+.b3 {
+  top: 45%;
+  left: 6%;
+  font-size: 1rem;
+  animation-delay: 1.2s;
+}
+
+.b4 {
+  top: 60%;
+  right: 8%;
+  font-size: 1.4rem;
+  animation-delay: 1.8s;
+}
+
+.b5 {
+  top: 75%;
+  left: 14%;
+  font-size: 1.8rem;
+  animation-delay: 0.9s;
+}
+
+.carga {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  z-index: 2;
+  width: min(320px, 70vw);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  transform: translateX(-50%);
+}
+
+.texto-carga {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  animation: latido 1.2s ease-in-out infinite;
+}
+
+.barra {
+  width: 100%;
+  height: 3px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.relleno {
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff4fa3, #c77dff);
+  box-shadow: 0 0 12px #ff4fa3;
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: llenar 3.5s ease-in-out forwards;
+}
+
+@keyframes zoom {
+  from { transform: scale(1.15); }
+  to   { transform: scale(1); }
+}
+
+@keyframes subir {
+  to { transform: translateY(0); }
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes titilar {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(0.7) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2) rotate(20deg);
+  }
+}
+
+@keyframes llenar {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+@keyframes latido {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 1; }
+}

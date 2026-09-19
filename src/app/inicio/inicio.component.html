@@ -1,0 +1,87 @@
+<div class="fondo"></div>
+
+<header class="nav">
+  <div class="nav-contenido">
+    <span class="logo">Sabine<span class="punto">.</span></span>
+    <nav>
+      <button type="button" (click)="ir('sobre-mi')">Sobre mí</button>
+      <button type="button" (click)="ir('habilidades')">Habilidades</button>
+      <button type="button" (click)="ir('proyectos')">Proyectos</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <span class="etiqueta">Portfolio profesional</span>
+    <h1>Hola, soy <span class="degradado">Sabine</span></h1>
+    <p class="hero-texto">
+      Full Stack Developer que crea sistemas académicos con C#, ASP.NET, SQL Server y Angular.
+    </p>
+    <div class="botones">
+      <button type="button" class="boton" (click)="ir('proyectos')">Ver proyectos</button>
+      <button type="button" class="boton secundario" (click)="ir('sobre-mi')">Sobre mí</button>
+    </div>
+  </section>
+
+  <section class="seccion" id="sobre-mi">
+    <div class="encabezado">
+      <span class="numero">01</span>
+      <h2>Sobre mí</h2>
+    </div>
+    <p class="sobre-texto">
+      Desarrollo y mantengo sistemas de gestión académica para una institución educativa.
+      Trabajo en todas las capas: interfaces, procedimientos almacenados en SQL Server y
+      arquitectura backend, y hoy llevo esa experiencia también a Angular.
+    </p>
+    <div class="cuadricula">
+      @for (enfoque of enfoques; track enfoque.titulo) {
+        <article class="tarjeta">
+          <h3>{{ enfoque.titulo }}</h3>
+          <p>{{ enfoque.descripcion }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="seccion" id="habilidades">
+    <div class="encabezado">
+      <span class="numero">02</span>
+      <h2>Habilidades</h2>
+    </div>
+    <div class="cuadricula">
+      @for (grupo of habilidades; track grupo.titulo) {
+        <article class="tarjeta">
+          <h3>{{ grupo.titulo }}</h3>
+          <div class="chips">
+            @for (item of grupo.items; track item) {
+              <span class="chip">{{ item }}</span>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="seccion" id="proyectos">
+    <div class="encabezado">
+      <span class="numero">03</span>
+      <h2>Proyectos</h2>
+    </div>
+    <div class="cuadricula">
+      @for (proyecto of proyectos; track proyecto.titulo) {
+        <article class="tarjeta">
+          <h3>{{ proyecto.titulo }}</h3>
+          <p>{{ proyecto.descripcion }}</p>
+          <div class="chips">
+            @for (tecnologia of proyecto.tecnologias; track tecnologia) {
+              <span class="chip">{{ tecnologia }}</span>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  </section>
+</main>
+
+<footer>© {{ anio }} Sabine · Hecho con Angular</footer>
