@@ -1,26 +1,45 @@
 <div class="splash" [class.salida]="saliendo()" (click)="cerrar()">
-  <img class="fondo-img" src="https://i.pinimg.com/736x/53/53/be/5353bec416f8582ea385b123c9b75c35.jpg" alt="Intro" />
-  <div class="velo"></div>
 
   <span class="brillo b1">✦</span>
   <span class="brillo b2">✦</span>
   <span class="brillo b3">✦</span>
   <span class="brillo b4">✦</span>
   <span class="brillo b5">✦</span>
+  <span class="brillo b6">✦</span>
 
   <div class="contenido">
-    <span class="etiqueta">Portfolio · Sabine</span>
+    <span class="etiqueta">&lt;portfolio /&gt; · 2025</span>
     <h1 class="titulo">
-      <span class="linea"><span>Tú puedes</span></span>
-      <span class="linea"><span>ser lo que</span></span>
-      <span class="linea"><span class="enfasis">quieras ser</span></span>
+      <span class="linea"><span>Hola, soy</span></span>
+      <span class="linea"><span class="enfasis">Sabine Vela</span></span>
     </h1>
+    <div class="subtitulo-wrap">
+      <div class="rol">
+        <span class="dot"></span>
+        <span>Tecnóloga en Desarrollo de Software</span>
+        <span class="dot"></span>
+      </div>
+      <div class="ingenieria-badge">
+        <span class="badge-icon">&lt;/&gt;</span>
+        <span class="badge-texto">Cursando <strong>Ingeniería en Informática</strong></span>
+      </div>
+      <div class="cursor-wrap">
+        <span class="prompt">~$</span>
+        <span class="texto-din">{{ textoDinamico() }}</span>
+        <span class="cursor-pipe" [class.oculto]="!cursorVisible()">▋</span>
+      </div>
+    </div>
   </div>
 
   <div class="carga">
-    <span class="texto-carga">Cargando</span>
-    <div class="barra">
-      <div class="relleno"></div>
+    <div class="carga-header">
+      <span class="texto-carga">// inicializando</span>
+      <span class="porcentaje">{{ progreso() }}%</span>
     </div>
+    <div class="barra">
+      <div class="relleno" [style.width.%]="progreso()"></div>
+    </div>
+    <span class="hint">toca para saltar →</span>
   </div>
+
 </div>

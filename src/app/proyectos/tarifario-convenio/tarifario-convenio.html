@@ -1,0 +1,184 @@
+<div class="fondo" id="fondo-vanta"></div>
+
+@if (modalAbierto()) {
+  <div class="modal-overlay" (click)="cerrarModal()">
+    <div class="modal-caja" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <span class="modal-titulo">Tarifarios por Convenio — SISACAD</span>
+        <button class="modal-cerrar" (click)="cerrarModal()">✕</button>
+      </div>
+      <div class="modal-imagen-wrap" [class.zoom]="zoomActivo()" (click)="toggleZoom()">
+        <img [src]="imagenes[imagenActual()]" class="modal-imagen" [class.zoom]="zoomActivo()" alt="imagen" />
+        <div class="modal-nav-left" (click)="$event.stopPropagation(); anterior()">‹</div>
+        <div class="modal-nav-right" (click)="$event.stopPropagation(); siguiente()">›</div>
+        <div class="modal-contador-flotante">{{ imagenActual() + 1 }} / {{ imagenes.length }}</div>
+      </div>
+      <div class="modal-thumbs">
+        @for (img of imagenes; track $index) {
+          <div class="modal-thumb" [class.activo]="$index === imagenActual()" (click)="imagenActual.set($index); zoomActivo.set(false)">
+            <img [src]="img" alt="miniatura" />
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+}
+
+<div class="pagina">
+  <header class="nav">
+    <div class="nav-contenido">
+      <span class="logo" (click)="volver()">Sabine<span class="punto">.</span></span>
+      <nav>
+        <button type="button" (click)="volver()">← Volver</button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero-proyecto">
+    <div class="hero-particles" aria-hidden="true">
+      @for (p of particulas; track $index) {
+        <span class="hero-particle"
+          [style.--x]="p.x + '%'"
+          [style.--y]="p.y + '%'"
+          [style.--d]="p.d + 's'"
+          [style.--delay]="p.delay + 's'"
+          [style.--size]="p.size + 'rem'">{{ p.char }}</span>
+      }
+    </div>
+    <div class="hero-proyecto-contenido">
+      <div class="hero-proyecto-texto">
+        <span class="proyecto-tag">&lt;proyecto 04 /&gt;</span>
+        <h1>Tarifarios por<br><span class="degradado">Convenio</span></h1>
+        <p class="hero-proyecto-desc">
+          Módulo de SISACAD para la creación masiva de tarifarios académicos con condiciones especiales para estudiantes beneficiarios de convenios institucionales.
+        </p>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-num">{{ imagenes.length || '—' }}</span>
+            <span class="stat-label">capturas</span>
+          </div>
+          <div class="stat-div"></div>
+          <div class="stat">
+            <span class="stat-num">5</span>
+            <span class="stat-label">pasos</span>
+          </div>
+          <div class="stat-div"></div>
+          <div class="stat">
+            <span class="stat-num">04</span>
+            <span class="stat-label">proyecto</span>
+          </div>
+        </div>
+        <div class="hero-techs">
+          <span class="tech-chip">Angular</span>
+          <span class="tech-chip">.NET Core 8</span>
+          <span class="tech-chip">PostgreSQL</span>
+          <span class="tech-chip">TypeScript</span>
+        </div>
+        @if (imagenes.length > 0) {
+          <button class="btn-galeria" (click)="abrirModal(0)">
+            <span>Ver galería completa</span>
+            <span class="btn-arrow">→</span>
+          </button>
+        }
+      </div>
+      <div class="hero-right">
+        @if (imagenes.length > 0) {
+          <div class="hero-proyecto-img" (click)="abrirModal(0)">
+            <div class="img-marco">
+              <img [src]="imagenes[0]" alt="Tarifario Convenio" class="img-principal" />
+              <div class="img-overlay">
+                <span class="img-overlay-text">Ver galería →</span>
+              </div>
+            </div>
+            @if (imagenes.length > 1) {
+              <div class="img-flotante" (click)="$event.stopPropagation(); abrirModal(1)">
+                <img [src]="imagenes[1]" alt="captura 2" />
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="hero-sin-img">
+            <span class="hero-sin-img-icon">&lt;/&gt;</span>
+            <span class="hero-sin-img-txt">Imágenes próximamente</span>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section class="seccion-desc">
+      <div class="desc-grid">
+        <div class="desc-card">
+          <div class="desc-card-num">01</div>
+          <span class="desc-icon">◈</span>
+          <h3>¿Qué hace?</h3>
+          <p>Permite crear tarifarios con condiciones especiales para convenios institucionales, seleccionando múltiples carreras, sucursales y modalidades con sus respectivos beneficios.</p>
+        </div>
+        <div class="desc-card destacada">
+          <div class="desc-card-num">02</div>
+          <span class="desc-icon">◎</span>
+          <h3>Mi rol</h3>
+          <p>Desarrollé el módulo en Angular con .NET Core 8, incluyendo la lógica de convenios, configuración de descuentos, generación masiva de tarifarios y vinculación con estudiantes beneficiarios.</p>
+        </div>
+        <div class="desc-card">
+          <div class="desc-card-num">03</div>
+          <span class="desc-icon">◉</span>
+          <h3>Impacto</h3>
+          <p>Automatizó la gestión de tarifarios especiales, garantizando que los beneficiarios de convenios reciban las condiciones correctas sin intervención manual en cada caso.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="seccion-flujo">
+      <div class="galeria-header">
+        <div>
+          <h2>Flujo del proceso</h2>
+          <span class="galeria-sub">cómo funciona la creación de tarifarios por convenio</span>
+        </div>
+        <div class="galeria-linea"></div>
+      </div>
+      <div class="flujo-lista">
+        @for (paso of pasos; track paso.num) {
+          <div class="flujo-item">
+            <div class="flujo-num">{{ paso.num }}</div>
+            <div class="flujo-conector"></div>
+            <div class="flujo-info">
+              <h3>{{ paso.titulo }}</h3>
+              <p>{{ paso.desc }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+
+    @if (imagenes.length > 0) {
+      <section class="seccion-galeria">
+        <div class="galeria-header">
+          <div>
+            <h2>Galería</h2>
+            <span class="galeria-sub">{{ imagenes.length }} capturas del proyecto · toca para ampliar</span>
+          </div>
+          <div class="galeria-linea"></div>
+        </div>
+        <div class="galeria-grid">
+          @for (img of imagenes; track $index) {
+            <div class="galeria-item" [class.grande]="$index === 0 || $index === 5" (click)="abrirModal($index)">
+              <img [src]="img" alt="captura {{ $index + 1 }}" />
+              <div class="galeria-overlay">
+                <span class="galeria-num">{{ ($index + 1).toString().padStart(2, '0') }}</span>
+                <span class="galeria-zoom">⊕</span>
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+    }
+  </main>
+
+  <footer>
+    <span>© {{ anio }} Sabine Vela · Hecho con</span>
+    <span class="footer-heart">♥</span>
+    <span>y Angular</span>
+  </footer>
+</div>

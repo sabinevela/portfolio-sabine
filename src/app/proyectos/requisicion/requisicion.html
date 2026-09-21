@@ -1,0 +1,140 @@
+<div class="fondo" id="fondo-vanta"></div>
+
+@if (modalAbierto()) {
+  <div class="modal-overlay" (click)="cerrarModal()">
+    <div class="modal-caja" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <span class="modal-titulo">Requisición de Personal</span>
+        <button class="modal-cerrar" (click)="cerrarModal()">✕</button>
+      </div>
+      <div class="modal-imagen-wrap" [class.zoom]="zoomActivo()" (click)="toggleZoom()">
+        <img [src]="imagenes[imagenActual()]" class="modal-imagen" [class.zoom]="zoomActivo()" alt="imagen" />
+        <div class="modal-nav-left" (click)="$event.stopPropagation(); anterior()">‹</div>
+        <div class="modal-nav-right" (click)="$event.stopPropagation(); siguiente()">›</div>
+        <div class="modal-contador-flotante">{{ imagenActual() + 1 }} / {{ imagenes.length }}</div>
+      </div>
+      <div class="modal-thumbs">
+        @for (img of imagenes; track $index) {
+          <div class="modal-thumb" [class.activo]="$index === imagenActual()" (click)="imagenActual.set($index); zoomActivo.set(false)">
+            <img [src]="img" alt="miniatura" />
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+}
+
+<div class="pagina">
+  <header class="nav">
+    <div class="nav-contenido">
+      <span class="logo" (click)="volver()">Sabine<span class="punto">.</span></span>
+      <nav>
+        <button type="button" (click)="volver()">← Volver</button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero-proyecto">
+    <div class="hero-particles" aria-hidden="true">
+      @for (p of particulas; track $index) {
+        <span class="hero-particle" [style.--x]="p.x + '%'" [style.--y]="p.y + '%'" [style.--d]="p.d + 's'" [style.--delay]="p.delay + 's'" [style.--size]="p.size + 'rem'">{{ p.char }}</span>
+      }
+    </div>
+    <div class="hero-proyecto-contenido">
+      <div class="hero-proyecto-texto">
+        <span class="proyecto-tag">&lt;proyecto 01 /&gt;</span>
+        <h1>Requisición<br><span class="degradado">de Personal</span></h1>
+        <p class="hero-proyecto-desc">Módulo completo de gestión de requisiciones institucionales con flujo de aprobación multinivel, notificaciones automáticas y trazabilidad total del proceso.</p>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-num">13</span>
+            <span class="stat-label">capturas</span>
+          </div>
+          <div class="stat-div"></div>
+          <div class="stat">
+            <span class="stat-num">3</span>
+            <span class="stat-label">tecnologías</span>
+          </div>
+          <div class="stat-div"></div>
+          <div class="stat">
+            <span class="stat-num">01</span>
+            <span class="stat-label">proyecto</span>
+          </div>
+        </div>
+        <div class="hero-techs">
+          <span class="tech-chip">C#</span>
+          <span class="tech-chip">ASP.NET WebForms</span>
+          <span class="tech-chip">SQL Server</span>
+        </div>
+        <button class="btn-galeria" (click)="abrirModal(0)">
+          <span>Ver galería completa</span>
+          <span class="btn-arrow">→</span>
+        </button>
+      </div>
+      <div class="hero-proyecto-img" (click)="abrirModal(0)">
+        <div class="img-marco">
+          <img [src]="imagenes[0]" alt="Requisición" class="img-principal" />
+          <div class="img-overlay">
+            <span class="img-overlay-text">Ver galería →</span>
+          </div>
+        </div>
+        <div class="img-flotante" (click)="$event.stopPropagation(); abrirModal(1)">
+          <img [src]="imagenes[1]" alt="captura 2" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section class="seccion-desc">
+      <div class="desc-grid">
+        <div class="desc-card">
+          <div class="desc-card-num">01</div>
+          <span class="desc-icon">◈</span>
+          <h3>¿Qué hace?</h3>
+          <p>Permite crear solicitudes de requisición de personal que pasan por un flujo de aprobación multinivel hasta su aprobación o rechazo final, con notificaciones automáticas por correo en cada etapa.</p>
+        </div>
+        <div class="desc-card destacada">
+          <div class="desc-card-num">02</div>
+          <span class="desc-icon">◎</span>
+          <h3>Mi rol</h3>
+          <p>Desarrollé el módulo completo desde cero: diseño de base de datos, procedimientos almacenados en SQL Server, lógica de negocio en C# y la interfaz con validaciones y control de estados.</p>
+        </div>
+        <div class="desc-card">
+          <div class="desc-card-num">03</div>
+          <span class="desc-icon">◉</span>
+          <h3>Impacto</h3>
+          <p>Automatizó un proceso que antes era manual, reduciendo tiempos de aprobación y dando trazabilidad completa a cada solicitud dentro de la institución educativa.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="seccion-galeria">
+      <div class="galeria-header">
+        <div>
+          <h2>Galería</h2>
+          <span class="galeria-sub">{{ imagenes.length }} capturas del proyecto · toca para ampliar</span>
+        </div>
+        <div class="galeria-linea"></div>
+      </div>
+
+      <div class="galeria-grid">
+        @for (img of imagenes; track $index) {
+          <div class="galeria-item" [class.grande]="$index === 0 || $index === 5" (click)="abrirModal($index)">
+            <img [src]="img" alt="captura {{ $index + 1 }}" />
+            <div class="galeria-overlay">
+              <span class="galeria-num">{{ ($index + 1).toString().padStart(2, '0') }}</span>
+              <span class="galeria-zoom">⊕</span>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© {{ anio }} Sabine Vela · Hecho con</span>
+    <span class="footer-heart">♥</span>
+    <span>y Angular</span>
+  </footer>
+</div>

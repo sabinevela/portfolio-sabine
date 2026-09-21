@@ -1,87 +1,205 @@
-<div class="fondo"></div>
+<div class="fondo" id="fondo-vanta"></div>
 
-<header class="nav">
-  <div class="nav-contenido">
-    <span class="logo">Sabine<span class="punto">.</span></span>
-    <nav>
-      <button type="button" (click)="ir('sobre-mi')">Sobre mí</button>
-      <button type="button" (click)="ir('habilidades')">Habilidades</button>
-      <button type="button" (click)="ir('proyectos')">Proyectos</button>
-    </nav>
+@if (modalAbierto()) {
+  <div class="modal-overlay" (click)="cerrarModal()">
+    <div class="modal-caja" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <span class="modal-titulo-proyecto">{{ proyectos[proyectoActual()].titulo }}</span>
+        <button class="modal-cerrar" (click)="cerrarModal()">✕</button>
+      </div>
+      <div class="modal-imagen-wrap" [class.zoom]="zoomActivo()" (click)="toggleZoom()">
+        <img [src]="imagenesModal()[imagenActual()]" [class.zoom]="zoomActivo()" class="modal-imagen" alt="Imagen proyecto" />
+        <div class="modal-nav-left" (click)="$event.stopPropagation(); anterior()">‹</div>
+        <div class="modal-nav-right" (click)="$event.stopPropagation(); siguiente()">›</div>
+        <div class="modal-contador-flotante">{{ imagenActual() + 1 }} / {{ imagenesModal().length }}</div>
+      </div>
+      <div class="modal-thumbs">
+        @for (img of imagenesModal(); track $index) {
+          <div class="modal-thumb" [class.activo]="$index === imagenActual()" (click)="imagenActual.set($index); zoomActivo.set(false)">
+            <img [src]="img" alt="miniatura" />
+          </div>
+        }
+      </div>
+    </div>
   </div>
-</header>
+}
 
-<main>
+<div class="pagina">
+  <header class="nav">
+    <div class="nav-contenido">
+      <span class="logo">Bienvenidos<span class="punto"></span></span>
+      <nav>
+        <button type="button" (click)="ir('sobre-mi')">Sobre mí</button>
+        <button type="button" (click)="ir('habilidades')">Habilidades</button>
+        <button type="button" (click)="ir('proyectos')">Proyectos</button>
+        <button type="button" (click)="ir('contacto')">Contacto</button>
+      </nav>
+    </div>
+  </header>
+
   <section class="hero">
-    <span class="etiqueta">Portfolio profesional</span>
-    <h1>Hola, soy <span class="degradado">Sabine</span></h1>
-    <p class="hero-texto">
-      Full Stack Developer que crea sistemas académicos con C#, ASP.NET, SQL Server y Angular.
-    </p>
-    <div class="botones">
-      <button type="button" class="boton" (click)="ir('proyectos')">Ver proyectos</button>
-      <button type="button" class="boton secundario" (click)="ir('sobre-mi')">Sobre mí</button>
+    <div class="hero-fondo-foto">
+      <img src="/sabine.jpg" alt="Sabine Vela" class="hero-foto-bg" />
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-contenido">
+      <div class="hero-top">
+        <span class="etiqueta">&lt;portfolio/&gt;</span>
+        <div class="hero-roles">
+          <span>Full Stack</span>
+          <span>Mobile</span>
+          <span>Web</span>
+        </div>
+      </div>
+      <div class="hero-titulo-wrap">
+        <div class="hero-portfolio-linea">
+          <span class="hero-letra-grande">P</span>
+          <span class="hero-sub">ortfolio</span>
+        </div>
+        <h1 class="hero-nombre"><span class="degradado-nombre">Sabine</span><br>Vela</h1>
+      </div>
+      <div class="hero-bottom">
+        <p class="hero-desc">
+          Tecnóloga en Desarrollo de Software<br>
+          <strong>Cursando Ingeniería en Informática</strong>
+        </p>
+        <div class="botones">
+          <button type="button" class="boton primario" (click)="ir('proyectos')">
+            Ver proyectos <span class="boton-icon">→</span>
+          </button>
+          <button type="button" class="boton secundario" (click)="ir('contacto')">Contáctame</button>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="seccion" id="sobre-mi">
-    <div class="encabezado">
-      <span class="numero">01</span>
-      <h2>Sobre mí</h2>
-    </div>
-    <p class="sobre-texto">
-      Desarrollo y mantengo sistemas de gestión académica para una institución educativa.
-      Trabajo en todas las capas: interfaces, procedimientos almacenados en SQL Server y
-      arquitectura backend, y hoy llevo esa experiencia también a Angular.
-    </p>
-    <div class="cuadricula">
-      @for (enfoque of enfoques; track enfoque.titulo) {
-        <article class="tarjeta">
-          <h3>{{ enfoque.titulo }}</h3>
-          <p>{{ enfoque.descripcion }}</p>
-        </article>
+  <main>
+    <section class="seccion" id="sobre-mi">
+      <div class="encabezado">
+        <span class="numero">01</span>
+        <h2>Sobre mí</h2>
+        <div class="linea-dec"></div>
+      </div>
+      <div class="sobre-grid">
+        <div class="sobre-texto-wrap">
+          <p class="sobre-texto">Soy Sabine Vela, desarrolladora de software de 21 años, graduada como Tecnóloga en Desarrollo de Software y actualmente estudiante de Ingeniería en Informática. Me apasiona crear soluciones digitales que combinan diseño, funcionalidad y tecnología.</p>
+          <p class="sobre-texto">Actualmente trabajo en el desarrollo de sistemas para un instituto educativo, donde participo en la creación y mejora de plataformas que optimizan procesos institucionales y responden a necesidades reales.</p>
+          <p class="sobre-texto">Trabajo con tecnologías como Angular, .NET, Spring Boot, React, Flutter, Firebase, MySQL y PostgreSQL, desarrollando interfaces, lógica de negocio y soluciones con bases de datos.</p>
+        </div>
+        <div class="sobre-cards">
+          @for (enfoque of enfoques; track enfoque.titulo) {
+            <article class="enfoque-card">
+              <span class="enfoque-icon">{{ enfoque.icono }}</span>
+              <h3>{{ enfoque.titulo }}</h3>
+              <p>{{ enfoque.descripcion }}</p>
+            </article>
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="seccion" id="habilidades">
+      <div class="encabezado">
+        <span class="numero">02</span>
+        <h2>Habilidades</h2>
+        <div class="linea-dec"></div>
+      </div>
+      <div class="skills-grid">
+        @for (grupo of habilidades; track grupo.titulo) {
+          <article class="skill-card">
+            <div class="skill-header">
+              <span class="skill-icon">{{ grupo.icono }}</span>
+              <h3>{{ grupo.titulo }}</h3>
+            </div>
+            <div class="chips">
+              @for (item of grupo.items; track item) {
+                <span class="chip">{{ item }}</span>
+              }
+            </div>
+          </article>
+        }
+      </div>
+    </section>
+
+    <section class="seccion" id="proyectos">
+  <div class="encabezado">
+    <span class="numero">03</span>
+    <h2>Proyectos</h2>
+    <div class="linea-dec"></div>
+  </div>
+
+  <button class="btn-proyectos" (click)="toggleProyectos()">
+    <span class="btn-proyectos-texto">{{ proyectosAbiertos() ? 'Cerrar proyectos' : 'Ver proyectos' }}</span>
+    <span class="btn-proyectos-icon" [class.rotado]="proyectosAbiertos()">↓</span>
+    <div class="btn-letras" aria-hidden="true">
+      @for (l of letrasBtn; track $index) {
+        <span class="btn-letra" [style.--i]="$index">{{ l }}</span>
       }
     </div>
-  </section>
+  </button>
 
-  <section class="seccion" id="habilidades">
-    <div class="encabezado">
-      <span class="numero">02</span>
-      <h2>Habilidades</h2>
-    </div>
-    <div class="cuadricula">
-      @for (grupo of habilidades; track grupo.titulo) {
-        <article class="tarjeta">
-          <h3>{{ grupo.titulo }}</h3>
-          <div class="chips">
-            @for (item of grupo.items; track item) {
-              <span class="chip">{{ item }}</span>
+  @if (proyectosAbiertos()) {
+    <div class="proyectos-lista">
+      @for (proyecto of proyectos; track proyecto.titulo; let i = $index) {
+        <article class="proyecto-h" (click)="navegarProyecto(proyecto, i)">
+          <div class="proyecto-h-num">{{ proyecto.num }}</div>
+          <div class="proyecto-h-img">
+            @if (proyecto.imagenes.length > 0) {
+              <img [src]="proyecto.imagenes[0]" alt="{{ proyecto.titulo }}" />
+            } @else {
+              <div class="proyecto-h-sin-img">&lt;/&gt;</div>
             }
           </div>
-        </article>
-      }
-    </div>
-  </section>
-
-  <section class="seccion" id="proyectos">
-    <div class="encabezado">
-      <span class="numero">03</span>
-      <h2>Proyectos</h2>
-    </div>
-    <div class="cuadricula">
-      @for (proyecto of proyectos; track proyecto.titulo) {
-        <article class="tarjeta">
-          <h3>{{ proyecto.titulo }}</h3>
-          <p>{{ proyecto.descripcion }}</p>
-          <div class="chips">
-            @for (tecnologia of proyecto.tecnologias; track tecnologia) {
-              <span class="chip">{{ tecnologia }}</span>
+          <div class="proyecto-h-info">
+            <h3>{{ proyecto.titulo }}</h3>
+            <p>{{ proyecto.descripcion }}</p>
+            <div class="chips">
+              @for (tec of proyecto.tecnologias; track tec) {
+                <span class="chip">{{ tec }}</span>
+              }
+            </div>
+          </div>
+          <div class="proyecto-h-letras" aria-hidden="true">
+            @for (l of letrasProyecto; track $index) {
+              <span class="p-letra" [style.--i]="$index" [style.--x]="l.x" [style.--y]="l.y">{{ l.char }}</span>
             }
           </div>
+          <div class="proyecto-h-arrow">→</div>
         </article>
       }
     </div>
-  </section>
-</main>
+  }
+</section>
 
-<footer>© {{ anio }} Sabine · Hecho con Angular</footer>
+    <section class="seccion" id="contacto">
+      <div class="encabezado">
+        <span class="numero">04</span>
+        <h2>Contacto</h2>
+        <div class="linea-dec"></div>
+      </div>
+      <div class="contacto-wrap">
+        <p class="sobre-texto">¿Tienes un proyecto en mente? ¡Hablemos!</p>
+        <div class="contacto-links">
+          <a class="contacto-card" href="mailto:srjsab5@gmail.com">
+            <span class="contacto-icon">✉</span>
+            <span>srjsab5&#64;gmail.com</span>
+          </a>
+          <a class="contacto-card" href="https://linkedin.com/in/sabinevela" target="_blank">
+            <span class="contacto-icon">in</span>
+            <span>sabinevela</span>
+          </a>
+          <a class="contacto-card" href="https://github.com/sabinevela" target="_blank">
+            <span class="contacto-icon">&lt;/&gt;</span>
+            <span>sabinevela</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© {{ anio }} Sabine Vela · Hecho con</span>
+    <span class="footer-heart">♥</span>
+    <span>y Angular</span>
+  </footer>
+</div>
